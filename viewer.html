@@ -1,0 +1,82 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
+
+<center>
+
+<span id="introText">
+    <div style="font-size: 72px">
+            Visit chem.ajay.app to participate
+    </div>
+    
+    <div style="font-size: 120px">
+        <span id="usageText">0</span>kW usage
+    </div>
+</span>
+
+</center>
+
+<canvas id="powerUsageChart" width="100%" height="25%"></canvas>
+
+<script>
+
+var ctx = document.getElementById('powerUsageChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Energy Usage (kW)',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: []
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+    }
+});
+
+let frames = 0;
+
+function update() {
+    httpGetAsync("/usage", updateDisplay);
+}
+
+function updateDisplay(response) {
+
+    document.getElementById("usageText").innerHTML = response;
+
+    if (frames % 60 == 0) {
+        //update chart
+        chart.data.labels.push(frames/60)
+        chart.data.datasets[0].data.push(response)
+        chart.update()
+    }
+   
+
+    frames++;
+}
+
+setInterval(update, 100/6);
+
+function httpGetAsync(url, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            callback(xmlHttp.responseText);
+        }
+    }
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+}
+</script>
+
+<style>
+* {
+    font-family: 'Baloo Bhai';
+}
+</style>

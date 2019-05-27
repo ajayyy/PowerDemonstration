@@ -1,0 +1,81 @@
+<div style="font-size: 72px">
+    <button type="button" style="font-size: 72px" onclick="light('light1')" id="light1">Turn light 1 on</button>
+    <button type="button" style="font-size: 72px" onclick="light('light2')" id="light2">Turn light 2 on</button>
+    <button type="button" style="font-size: 72px" onclick="light('light3')" id="light3">Turn light 3 on</button>
+    <button type="button" style="font-size: 72px" onclick="light('light4')" id=light4>Turn A/C on</button>
+</div>
+
+<script>
+
+let light1 = false;
+let light2 = false;
+let light3 = false;
+let light4 = false;
+
+
+function light(id){
+    let condition = getCondition(id);
+
+    if (condition) {
+        httpGetAsync("/" + id + "Off");
+        let text = document.getElementById(id).innerHTML;
+        document.getElementById(id).innerHTML = text.slice(0, text.length - 3) + "on";
+        setCondition(id, false);
+    } else {
+        httpGetAsync("/" + id + "On");
+        let text = document.getElementById(id).innerHTML;
+        document.getElementById(id).innerHTML = text.slice(0, text.length - 2) + "off";
+        setCondition(id, true);
+    }
+}
+
+function getCondition(id) {
+    let condition = false;
+    if (id == "light1") {
+        condition = light1;
+    } else if (id == "light2") {
+        condition = light2;
+    } else if (id == "light3") {
+        condition = light3;
+    } else if (id == "light4") {
+        condition = light4;
+    }
+
+    return condition;
+}
+
+function setCondition(id, bool) {
+    if (id == "light1") {
+        light1 = bool;
+    } else if (id == "light2") {
+        light2 = bool;
+    } else if (id == "light3") {
+        light3 = bool;
+    } else if (id == "light4") {
+        light4 = bool;
+    }
+}
+
+function light2On(){
+    httpGetAsync("/light2On");
+}
+
+function light3On(){
+    httpGetAsync("/light3On");
+}
+
+function light4On(){
+    httpGetAsync("/light4On");
+}
+
+function httpGetAsync(url, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            callback(xmlHttp.responseText);
+        }
+    }
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+}
+</script>
