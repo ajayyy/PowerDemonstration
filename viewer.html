@@ -1,0 +1,35 @@
+<center>
+
+<div style="font-size: 72px">
+        Visit chem.ajay.app to participate
+</div>
+
+<div style="font-size: 120px">
+    <span id="usageText">0</span>kW usage
+</div>
+
+</center>
+
+<script>
+
+function update() {
+    httpGetAsync("/usage", updateDisplay);
+}
+
+function updateDisplay(response) {
+    document.getElementById("usageText").innerHTML = response;
+}
+
+setInterval(update, 500);
+
+function httpGetAsync(url, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            callback(xmlHttp.responseText);
+        }
+    }
+    xmlHttp.open("GET", url, true);
+    xmlHttp.send(null);
+}
+</script>
