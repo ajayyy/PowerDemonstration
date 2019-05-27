@@ -13,9 +13,9 @@ http.createServer(app).listen(80);
 
 var energyUsed = 0;
 
-var light1Usage = 22;
-var light2Usage = 33;
-var light3Usage = 12;
+var light1Usage = 12;
+var light2Usage = 53;
+var light3Usage = 32;
 var light4Usage = 102;
 
 //add the public files
