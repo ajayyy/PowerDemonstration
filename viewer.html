@@ -50,7 +50,7 @@ function updateDisplay(response) {
 
     document.getElementById("usageText").innerHTML = response;
 
-    if (frames % 60 == 0) {
+    if (frames % 30 == 0) {
         //update chart
         chart.data.labels.push(frames/60)
         chart.data.datasets[0].data.push(response)
