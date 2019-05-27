@@ -1,8 +1,8 @@
 <div style="font-size: 72px">
-    <button type="button" style="font-size: 72px" onclick="light('light1')" id="light1">Turn light on</button>
-    <button type="button" style="font-size: 72px" onclick="light('light2')" id="light2">Turn microwave on</button>
-    <button type="button" style="font-size: 72px" onclick="light('light3')" id="light3">Turn computer on</button>
-    <button type="button" style="font-size: 72px" onclick="light('light4')" id=light4>Turn A/C on</button>
+    <button type="button" style="font-size: 72px; background-color: #f44336" onclick="light('light1')" id="light1">Turn light on</button>
+    <button type="button" style="font-size: 72px; background-color: #f44336" onclick="light('light2')" id="light2">Turn microwave on</button>
+    <button type="button" style="font-size: 72px; background-color: #f44336" onclick="light('light3')" id="light3">Turn computer on</button>
+    <button type="button" style="font-size: 72px; background-color: #f44336" onclick="light('light4')" id=light4>Turn A/C on</button>
 </div>
 
 <script>
@@ -20,11 +20,13 @@ function light(id){
         httpGetAsync("/" + id + "Off");
         let text = document.getElementById(id).innerHTML;
         document.getElementById(id).innerHTML = text.slice(0, text.length - 3) + "on";
+        document.getElementById(id).style.backgroundColor = "#f44336";
         setCondition(id, false);
     } else {
         httpGetAsync("/" + id + "On");
         let text = document.getElementById(id).innerHTML;
         document.getElementById(id).innerHTML = text.slice(0, text.length - 2) + "off";
+        document.getElementById(id).style.backgroundColor = "#4CAF00";
         setCondition(id, true);
     }
 }
