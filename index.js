@@ -17,7 +17,7 @@ var options = {
 
 // Create an HTTP service.
 http.createServer(app).listen(80);
-http.createServer(options, app).listen(443);
+https.createServer(options, app).listen(443);
 
 var energyUsed = 0;
 
