@@ -4,12 +4,20 @@ const fs = require("fs");
 
 var express = require('express');
 var http = require('http');
+var https = require('https');
 
 // Create a service (the app object is just a callback).
 var app = express();
 
+//https://stackoverflow.com/a/14272874/1985387
+var options = {
+    key: fs.readFileSync('./certificates/private.key'),
+    cert: fs.readFileSync('./certificates/certificate.crt')
+};
+
 // Create an HTTP service.
 http.createServer(app).listen(80);
+http.createServer(options, app).listen(443);
 
 var energyUsed = 0;
 
